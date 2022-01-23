@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("user")
-@Tag(name = "user-api", description = "用户管理 API")
+@Tag(name = "用户管理 API", description = "user-api")
 public class UserController {
 
     @Autowired
@@ -22,6 +22,6 @@ public class UserController {
     @GetMapping("/{userId}")
     @Operation(summary = "获取用户信息", description = "根据用户 id 查询用户")
     public Mono<SysUser> get(@PathVariable("userId") Long userId) {
-        return Mono.justOrEmpty(userService.get(userId));
+        return userService.get(userId);
     }
 }
