@@ -19,12 +19,22 @@ import java.util.function.Function;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
+    private static final String[] SKIP_SWAGGER = new String[] {
+            "/favicon.ico",
+            "/doc.html",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/v3/**" };
+
     @Bean
     public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
-        return http.authorizeExchange()
-                .pathMatchers("/admin").hasAuthority("ROLE_ADMIN")
-                .anyExchange().authenticated()
-                .and().formLogin()
+        return http
+                .authorizeExchange()
+                    .pathMatchers(SKIP_SWAGGER).permitAll()
+                    .anyExchange().authenticated()
+                .and()
+                    .formLogin()
                 .and().build();
     }
 

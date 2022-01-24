@@ -30,6 +30,18 @@
         where id = #{id}
     </select>
 
+    <select id="selectPaged" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        order by id
+    </select>
+
+    <select id="count" resultType="long">
+        select *
+        from sys_user
+    </select>
+
     <insert id="insertSelective" parameterType="cn.rtomde.admin.dao.entity.security.SysUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -135,9 +147,9 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteByPrimaryKey">
-        delete
-        from sys_user
+    <update id="deleteLogistically">
+        update sys_user
+        set deleted = 1
         where id = #{id}
-    </delete>
+    </update>
 </mapper>
