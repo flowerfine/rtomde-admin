@@ -28,18 +28,21 @@
         <include refid="Base_Column_List"/>
         from sys_user
         where id = #{id}
+        and deleted = 0
     </select>
 
     <select id="selectPaged" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_user
+        where deleted = 0
         order by id
     </select>
 
     <select id="count" resultType="long">
-        select *
+        select count(*)
         from sys_user
+        where deleted = 0
     </select>
 
     <insert id="insertSelective" parameterType="cn.rtomde.admin.dao.entity.security.SysUser">
@@ -145,11 +148,13 @@
             </if>
         </set>
         where id = #{id}
+        and deleted = 0
     </update>
 
     <update id="deleteLogistically">
         update sys_user
         set deleted = 1
         where id = #{id}
+        and deleted = 0
     </update>
 </mapper>

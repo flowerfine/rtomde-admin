@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Boolean> delete(Long userId) {
-        return Mono.fromSupplier(() -> sysUserMapper.deleteLogistically(userId))
+        return Mono.empty().doAfterTerminate(() -> sysUserMapper.deleteById(userId))
+                .map((unused) -> sysUserMapper.deleteLogistically(userId))
                 .map(delete -> delete == 1);
     }
 }
