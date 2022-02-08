@@ -28,6 +28,15 @@
         <include refid="Base_Column_List"/>
         from sys_role
         where id = #{id}
+        and deleted = 0
+    </select>
+
+    <select id="selectPaged" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        where deleted = 0
+        order by id
     </select>
 
     <insert id="insertSelective" parameterType="cn.rtomde.admin.dao.entity.security.SysRole">
