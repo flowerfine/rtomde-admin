@@ -113,6 +113,9 @@ CREATE TABLE `sys_user` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
   `phone` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手机号码',
   `desc` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `password_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '密码修改时间',
+  `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
+  `enabled` tinyint unsigned NOT NULL COMMENT '启用标识。0:未启用, 1:已启用',
   `deleted` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '删除标识。0: 未删除, 1: 已删除',
   `creator` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'system' COMMENT '创建人 ',
   `updater` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'system' COMMENT '修改者',
@@ -128,7 +131,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES (1, 'wangqi', '123', '王奇', '', '', '', '', 0, 'system', 'system', '2022-01-22 15:04:56', '2022-01-22 15:04:56', '');
+INSERT INTO `sys_user`(`username`, `password`, `nickname`, `avatar`, `email`, `phone`, `desc`, `password_update_time`, `expire_time`, `enabled`, `creator`, `updater`, `comments`) VALUES ('wangqi', '123', '王奇', '', '', '', '', '2022-02-08 12:57:42', NULL, 1, 'system', 'system', '');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
