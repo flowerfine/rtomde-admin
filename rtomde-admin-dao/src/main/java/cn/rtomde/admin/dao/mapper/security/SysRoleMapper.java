@@ -15,5 +15,5 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     int updateByPrimaryKeySelective(SysRole record);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteLogistically(Long id);
 }

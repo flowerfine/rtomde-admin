@@ -63,17 +63,8 @@
             <if test="type != null">
                 `type`,
             </if>
-            <if test="deleted != null">
-                deleted,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
             <if test="creator != null">
                 creator,
-            </if>
-            <if test="updateTime != null">
-                update_time,
             </if>
             <if test="updater != null">
                 updater,
@@ -104,17 +95,8 @@
             <if test="type != null">
                 #{type},
             </if>
-            <if test="deleted != null">
-                #{deleted},
-            </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
             <if test="creator != null">
                 #{creator},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
             </if>
             <if test="updater != null">
                 #{updater},
@@ -124,8 +106,8 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="cn.rtomde.admin.dao.entity.security.SysRole">
-        <!--@mbg.generated-->
         update sys_role
         <set>
             <if test="name != null">
@@ -146,17 +128,8 @@
             <if test="type != null">
                 `type` = #{type},
             </if>
-            <if test="deleted != null">
-                deleted = #{deleted},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
             <if test="creator != null">
                 creator = #{creator},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
             </if>
             <if test="updater != null">
                 updater = #{updater},
@@ -166,11 +139,13 @@
             </if>
         </set>
         where id = #{id}
+        and deleted = 0
     </update>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
-        from sys_role
+    <update id="deleteLogistically">
+        update sys_role
+        set deleted = 1
         where id = #{id}
-    </delete>
+        and deleted = 0
+    </update>
 </mapper>

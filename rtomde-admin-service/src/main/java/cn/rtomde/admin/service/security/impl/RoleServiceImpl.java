@@ -24,21 +24,25 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Mono<SysRole> get(Long roleId) {
-        return null;
+        return Mono.justOrEmpty(sysRoleMapper.selectByPrimaryKey(roleId));
     }
 
     @Override
     public Mono<Boolean> add(SysRole role) {
-        return null;
+        return Mono.fromSupplier(() -> sysRoleMapper.insertSelective(role))
+                .map(insert -> insert == 1);
     }
 
     @Override
     public Mono<Boolean> update(SysRole role) {
-        return null;
+        return Mono.fromSupplier(() -> sysRoleMapper.updateByPrimaryKeySelective(role))
+                .map(update -> update == 1);
     }
 
     @Override
     public Mono<Boolean> delete(Long roleId) {
-        return null;
+        return Mono.empty().doAfterTerminate(() -> sysRoleMapper.deleteById(roleId))
+                .map((unused) -> sysRoleMapper.deleteLogistically(roleId))
+                .map(delete -> delete == 1);
     }
 }
