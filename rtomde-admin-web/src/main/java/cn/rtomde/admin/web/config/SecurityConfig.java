@@ -19,21 +19,24 @@ import java.util.function.Function;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
-    private static final String[] SKIP_SWAGGER = new String[] {
+    private static final String[] SKIP_SWAGGER = new String[]{
+//            "/doc.html",
             "/favicon.ico",
-            "/doc.html",
             "/swagger-ui.html",
             "/webjars/**",
             "/swagger-resources/**",
-            "/v3/**" };
+            "/v3/**"};
 
     @Bean
     public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
         return http
-                .authorizeExchange()
+                    .authorizeExchange()
                     .pathMatchers(SKIP_SWAGGER).permitAll()
                     .anyExchange().authenticated()
                 .and()
+                    .csrf()
+                .disable()
+//                .and()
                     .formLogin()
                 .and().build();
     }
@@ -41,9 +44,9 @@ public class SecurityConfig {
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User
-                .withUsername("user")
+                .withUsername("admin")
                 .passwordEncoder(passwordEncoder())
-                .password("123456")
+                .password("12345")
                 .roles("USER")
                 .build();
         return new MapReactiveUserDetailsService(user);
