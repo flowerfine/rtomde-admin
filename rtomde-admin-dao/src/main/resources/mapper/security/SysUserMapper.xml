@@ -10,6 +10,9 @@
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
         <result column="desc" property="desc"/>
+        <result column="password_update_time" property="passwordUpdateTime"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="enabled" property="enabled"/>
         <result column="deleted" property="deleted"/>
         <result column="create_time" property="createTime"/>
         <result column="creator" property="creator"/>
@@ -19,8 +22,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, username, `password`, nickname, avatar, email, phone, `desc`, deleted,
-        create_time, creator, update_time, updater, comments
+        id, username, `password`, nickname, avatar, email, phone, `desc`,
+        password_update_time, expire_time, enabled,
+        deleted, create_time, creator, update_time, updater, comments
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -69,6 +73,15 @@
             <if test="desc != null">
                 `desc`,
             </if>
+            <if test="passwordUpdateTime != null">
+                password_update_time,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
             <if test="creator != null">
                 creator,
             </if>
@@ -100,6 +113,15 @@
             </if>
             <if test="desc != null">
                 #{desc},
+            </if>
+            <if test="passwordUpdateTime != null">
+                #{passwordUpdateTime},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime},
+            </if>
+            <if test="enabled != null">
+                #{enabled},
             </if>
             <if test="creator != null">
                 #{creator},
@@ -136,6 +158,15 @@
             </if>
             <if test="desc != null">
                 `desc` = #{desc},
+            </if>
+            <if test="passwordUpdateTime != null">
+                password_update_time = #{passwordUpdateTime},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
             </if>
             <if test="creator != null">
                 creator = #{creator},

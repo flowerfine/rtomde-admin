@@ -4,6 +4,8 @@ import cn.rtomde.admin.dao.entity.BaseEntityExt;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * 用户表
  */
@@ -45,4 +47,20 @@ public class SysUser extends BaseEntityExt {
      * 描述
      */
     private String desc;
+
+    /**
+     * 密码修改时间
+     */
+    private Date passwordUpdateTime;
+
+    /**
+     * 过期时间
+     */
+    private Date expireTime;
+
+    /**
+     * 启用标识。0:未启用, 1:已启用
+     * mybatis 会自动将 tinyint 类型转换为 boolean 类型
+     */
+    private boolean enabled;
 }
