@@ -26,6 +26,7 @@
         <module>rtomde-admin-dao</module>
         <module>rtomde-admin-common</module>
         <module>rtomde-admin-service</module>
+        <module>rtomde-admin-web</module>
     </modules>
 
     <dependencies>
