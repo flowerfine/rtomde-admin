@@ -54,8 +54,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Mono<Boolean> delete(Long roleId) {
-        return Mono.empty().doAfterTerminate(() -> sysRoleMapper.deleteById(roleId))
-                .map((unused) -> sysRoleMapper.deleteLogistically(roleId))
+        return Mono.fromSupplier(() -> sysRoleMapper.deleteLogistically(roleId))
                 .map(delete -> delete == 1);
     }
 }
