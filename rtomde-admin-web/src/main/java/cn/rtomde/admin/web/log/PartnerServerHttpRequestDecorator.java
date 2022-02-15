@@ -3,7 +3,6 @@ package cn.rtomde.admin.web.log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.util.StringUtils;
@@ -28,7 +27,6 @@ public class PartnerServerHttpRequestDecorator extends ServerHttpRequestDecorato
                 .stream()
                 .map(entry -> "            " + entry.getKey() + ": " + String.join(";", entry.getValue()))
                 .collect(Collectors.joining("\n"));
-        final MediaType contentType = delegate.getHeaders().getContentType();
         if (log.isDebugEnabled()) {
             log.debug("登陆用户:[{}] {} {} headers: \n{}",
                     "unknown", method, path + (StringUtils.isEmpty(query) ? "" : "?" + query), headers);

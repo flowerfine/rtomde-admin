@@ -47,8 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Boolean> add(SysUser user) {
-        return Mono.fromSupplier(() -> sysUserMapper.insertSelective(user))
-                .map(insert -> insert == 1);
+        Mono<Object> delete = Mono.empty().doFirst(() -> sysUserMapper.deleteByUsername(user.getUsername()));
+        return delete.then(Mono.fromSupplier(() -> sysUserMapper.insertSelective(user))
+                .map(insert -> insert == 1));
     }
 
     @Override
@@ -59,8 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Boolean> delete(Long userId) {
-        return Mono.empty().doAfterTerminate(() -> sysUserMapper.deleteById(userId))
-                .map((unused) -> sysUserMapper.deleteLogistically(userId))
+        return Mono.fromSupplier(() -> sysUserMapper.deleteLogistically(userId))
                 .map(delete -> delete == 1);
     }
 }
