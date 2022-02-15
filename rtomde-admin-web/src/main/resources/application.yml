@@ -29,7 +29,7 @@ mybatis-plus:
 
 logging:
   level:
-    - root: debug
+    root: debug
 management:
   auditevents:
     enabled: true

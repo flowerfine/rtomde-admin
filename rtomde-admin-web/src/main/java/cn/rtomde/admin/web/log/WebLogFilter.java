@@ -16,7 +16,7 @@ public class WebLogFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         final String path = request.getURI().getPath();
         final MediaType contentType = request.getHeaders().getContentType();
-        if (LogUtils.logMediaType(contentType) && LogUtils.logPath(path)) {
+        if (LogUtils.logMediaType(contentType) && LogUtils.ignorePath(path) == false) {
             return chain.filter(new PayloadServerWebExchangeDecorator(exchange));
         }
         return chain.filter(exchange);

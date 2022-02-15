@@ -26,23 +26,17 @@ public class PartnerServerHttpRequestDecorator extends ServerHttpRequestDecorato
         final String method = Optional.ofNullable(delegate.getMethod()).orElse(HttpMethod.GET).name();
         final String headers = delegate.getHeaders().entrySet()
                 .stream()
-                .map(entry -> "            " + entry.getKey() + ": [" + String.join(";", entry.getValue()) + "]")
+                .map(entry -> "            " + entry.getKey() + ": " + String.join(";", entry.getValue()))
                 .collect(Collectors.joining("\n"));
         final MediaType contentType = delegate.getHeaders().getContentType();
         if (log.isDebugEnabled()) {
-            log.debug("\n" +
-                    "HttpMethod : {}\n" +
-                    "Uri        : {}\n" +
-                    "Headers    : \n" +
-                    "{}", method, path + (StringUtils.isEmpty(query) ? "" : "?" + query), headers);
+            log.debug("登陆用户:[{}] {} {} headers: \n{}",
+                    "unknown", method, path + (StringUtils.isEmpty(query) ? "" : "?" + query), headers);
+        } else if (log.isInfoEnabled()) {
+            log.info("登陆用户:[{}] {} {}",
+                    "unknown", method, path + (StringUtils.isEmpty(query) ? "" : "?" + query));
         }
-        Flux<DataBuffer> flux = super.getBody();
-        if (LogUtils.MEDIA_TYPES.contains(contentType)) {
-            body = flux
-                    .publishOn(single()).map(dataBuffer -> LogUtils.loggingRequest(log, dataBuffer));
-        } else {
-            body = flux;
-        }
+        body = super.getBody().publishOn(single()).map(dataBuffer -> LogUtils.loggingRequest(log, dataBuffer));
     }
 
     @Override

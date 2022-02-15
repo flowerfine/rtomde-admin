@@ -3,7 +3,6 @@ package cn.rtomde.admin.web.log;
 import lombok.extern.log4j.Log4j2;
 import org.reactivestreams.Publisher;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import reactor.core.publisher.Flux;
@@ -25,16 +24,14 @@ public class PartnerServerHttpResponseDecorator extends ServerHttpResponseDecora
 
     @Override
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-        final MediaType contentType = super.getHeaders().getContentType();
-        if (LogUtils.MEDIA_TYPES.contains(contentType)) {
-            if (body instanceof Mono) {
-                final Mono<DataBuffer> monoBody = (Mono<DataBuffer>) body;
-                return super.writeWith(monoBody.publishOn(single()).map(dataBuffer -> LogUtils.loggingResponse(log, dataBuffer)));
-            } else if (body instanceof Flux) {
-                final Flux<DataBuffer> monoBody = (Flux<DataBuffer>) body;
-                return super.writeWith(monoBody.publishOn(single()).map(dataBuffer -> LogUtils.loggingResponse(log, dataBuffer)));
-            }
+        if (body instanceof Mono) {
+            final Mono<DataBuffer> monoBody = (Mono<DataBuffer>) body;
+            return super.writeWith(monoBody.publishOn(single()).map(dataBuffer -> LogUtils.loggingResponse(log, dataBuffer)));
+        } else if (body instanceof Flux) {
+            final Flux<DataBuffer> monoBody = (Flux<DataBuffer>) body;
+            return super.writeWith(monoBody.publishOn(single()).map(dataBuffer -> LogUtils.loggingResponse(log, dataBuffer)));
         }
+
         return super.writeWith(body);
     }
 

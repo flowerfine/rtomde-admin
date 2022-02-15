@@ -30,12 +30,12 @@ public class LogUtils {
 
     public static boolean logMediaType(MediaType mediaType) {
         if (mediaType == null) {
-            return false;
+            return true;
         }
         return MEDIA_TYPES.contains(mediaType);
     }
 
-    public static boolean logPath(String uri) {
+    public static boolean ignorePath(String uri) {
         return Arrays.asList(SecurityConfig.IGNORE_PATHS).stream()
                 .filter(pattern -> ANT_PATH_MATCHER.match(pattern, uri))
                 .findAny()
@@ -58,7 +58,7 @@ public class LogUtils {
             NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(new UnpooledByteBufAllocator(false));
             if (log.isDebugEnabled()) {
                 log.debug("\n" +
-                        "{}Payload    : {}", inOrOut, new String(bytes));
+                        "{}  Payload    : {}", inOrOut, new String(bytes));
             }
             DataBufferUtils.release(buffer);
             return (T) nettyDataBufferFactory.wrap(bytes);
