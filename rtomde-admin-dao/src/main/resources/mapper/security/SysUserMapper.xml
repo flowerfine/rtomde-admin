@@ -10,8 +10,8 @@
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
         <result column="desc" property="desc"/>
-        <result column="password_update_time" property="passwordUpdateTime"/>
-        <result column="expire_time" property="expireTime"/>
+        <result column="password_expire_time" property="passwordExpireTime"/>
+        <result column="user_expire_time" property="userExpireTime"/>
         <result column="enabled" property="enabled"/>
         <result column="deleted" property="deleted"/>
         <result column="create_time" property="createTime"/>
@@ -23,7 +23,7 @@
 
     <sql id="Base_Column_List">
         id, username, `password`, nickname, avatar, email, phone, `desc`,
-        password_update_time, expire_time, enabled,
+        password_expire_time, user_expire_time, enabled,
         deleted, create_time, creator, update_time, updater, comments
     </sql>
 
@@ -73,11 +73,11 @@
             <if test="desc != null">
                 `desc`,
             </if>
-            <if test="passwordUpdateTime != null">
-                password_update_time,
+            <if test="passwordExpireTime != null">
+                password_expire_time,
             </if>
-            <if test="expireTime != null">
-                expire_time,
+            <if test="userExpireTime != null">
+                user_expire_time,
             </if>
             <if test="enabled != null">
                 enabled,
@@ -114,11 +114,11 @@
             <if test="desc != null">
                 #{desc},
             </if>
-            <if test="passwordUpdateTime != null">
-                #{passwordUpdateTime},
+            <if test="passwordExpireTime != null">
+                #{passwordExpireTime},
             </if>
-            <if test="expireTime != null">
-                #{expireTime},
+            <if test="userExpireTime != null">
+                #{userExpireTime},
             </if>
             <if test="enabled != null">
                 #{enabled},
@@ -159,11 +159,11 @@
             <if test="desc != null">
                 `desc` = #{desc},
             </if>
-            <if test="passwordUpdateTime != null">
-                password_update_time = #{passwordUpdateTime},
+            <if test="passwordExpireTime != null">
+                password_update_time = #{passwordExpireTime},
             </if>
-            <if test="expireTime != null">
-                expire_time = #{expireTime},
+            <if test="userExpireTime != null">
+                user_expire_time = #{userExpireTime},
             </if>
             <if test="enabled != null">
                 enabled = #{enabled},

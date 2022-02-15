@@ -19,8 +19,9 @@ import java.util.function.Function;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
-    private static final String[] SKIP_SWAGGER = new String[]{
+    public static final String[] IGNORE_PATHS = new String[]{
 //            "/doc.html",
+            "/actuator/**",
             "/favicon.ico",
             "/swagger-ui.html",
             "/webjars/**",
@@ -31,7 +32,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
         return http
                     .authorizeExchange()
-                    .pathMatchers(SKIP_SWAGGER).permitAll()
+                    .pathMatchers(IGNORE_PATHS).permitAll()
                     .anyExchange().authenticated()
                 .and()
                     .csrf()

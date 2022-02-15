@@ -49,14 +49,14 @@ public class SysUser extends BaseEntityExt {
     private String desc;
 
     /**
-     * 密码修改时间
+     * 密码过期时间
      */
-    private Date passwordUpdateTime;
+    private Date passwordExpireTime;
 
     /**
-     * 过期时间
+     * 用户过期时间
      */
-    private Date expireTime;
+    private Date userExpireTime;
 
     /**
      * 启用标识。0:未启用, 1:已启用
